@@ -1,0 +1,19 @@
+.product-card {
+  margin: 2rem;
+  cursor: pointer;
+
+  .product-image {
+    width: 250px;
+    height: 250px;
+    margin-bottom: 2rem;
+  }
+  .product-title {
+    font-size: 18px;
+    margin-bottom: 0.3rem;
+  }
+
+  .product-price {
+    font-size: 24px;
+    font-weight: bold;
+  }
+}

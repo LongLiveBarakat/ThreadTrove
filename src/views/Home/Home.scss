@@ -1,0 +1,39 @@
+.hero {
+  padding: 5rem 3rem;
+
+  .main-title {
+    font-size: 46px;
+    margin-bottom: 1rem;
+  }
+
+  .paragraph {
+    font-size: 16px;
+    color: rgba(0, 0, 0, 0.6);
+    margin-bottom: 2rem;
+  }
+
+  .shop-now-btn {
+    background-color: black;
+    color: white;
+    border: none;
+    outline: none;
+    border-radius: 62px;
+    padding: 1rem 4rem;
+    margin-bottom: 2rem;
+    cursor: pointer;
+  }
+
+  .statics {
+    display: flex;
+    gap: 2rem;
+  }
+}
+
+.brands {
+  background: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 6rem;
+  padding: 2rem;
+}

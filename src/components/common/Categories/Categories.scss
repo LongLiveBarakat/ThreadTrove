@@ -1,0 +1,91 @@
+.category {
+  width: 90%;
+  border-radius: 40px;
+  background: #f0f0f0;
+  margin: 0 auto 2rem auto;
+
+  .title {
+    text-align: center;
+    padding: 4rem 0 0 0;
+
+    h1 {
+      font-size: 48px;
+      font-family: "Satoshi-Black";
+    }
+  }
+
+  .images {
+    display: flex;
+    flex-direction: column;
+    padding: 4rem;
+
+    .casual-formal,
+    .party-gym {
+      display: grid;
+      grid-auto-flow: column;
+      gap: 2%;
+
+      &.casual-formal {
+        grid-template-columns: 37% 61%;
+        margin-bottom: 1rem;
+      }
+
+      &.party-gym {
+        grid-template-columns: 61% 37%;
+      }
+    }
+
+    .casual,
+    .formal,
+    .party,
+    .gym {
+      width: 100%;
+      height: 300px;
+      border-radius: 20px;
+      position: relative;
+      cursor: pointer;
+      transition: 0.3s all ease;
+
+      &:hover {
+        transform: scale(1.05);
+      }
+
+      p {
+        position: absolute;
+        top: 10%;
+        left: 5%;
+        font-family: "Satoshi-Black";
+        font-size: 18px;
+      }
+    }
+
+    .casual {
+      background-image: url("src/assets/images/image-11.png");
+      background-size: cover;
+    }
+
+    .formal {
+      background-image: url("src/assets/images/image-13.png");
+      background-size: cover;
+    }
+
+    .party {
+      background-image: url("src/assets/images/image-12.png");
+      background-size: cover;
+    }
+
+    .gym {
+      background-image: url("src/assets/images/image-14.png");
+      background-size: cover;
+    }
+
+    .casual img,
+    .formal img,
+    .party img,
+    .gym img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+}

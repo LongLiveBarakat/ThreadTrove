@@ -1,0 +1,14 @@
+.size-bnt {
+  padding: 0.8rem 1.5rem;
+  border-radius: 62px;
+  background: #f0f0f0;
+  border: none;
+  color: rgba(0, 0, 0, 0.6);
+  cursor: pointer;
+  margin-right: 0.7rem;
+
+  &:focus {
+    background: black;
+    color: #ffffff;
+  }
+}

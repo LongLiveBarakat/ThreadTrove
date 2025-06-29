@@ -1,0 +1,28 @@
+.top-selling {
+  margin: 4rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+
+  .top-selling-title {
+    margin-bottom: 2rem;
+  }
+
+  .top-selling-products {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .view-all-btn {
+    border-radius: 62px;
+    outline: none;
+    padding: 1rem 4rem;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    background-color: white;
+    cursor: pointer;
+    font-size: 16px;
+    margin-bottom: 4rem;
+  }
+}
