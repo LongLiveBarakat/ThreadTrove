@@ -1,4 +1,6 @@
+// Home.jsx
 import "../Home/Home.scss";
+import { Link } from "react-router-dom";
 import NewArrivals from "../../components/common/NewArrivals/NewArrivals.jsx";
 import Rectangle from "../../assets/images/Rectangle.png";
 import calvin from "../../assets/images/brands/calvin.svg";
@@ -32,6 +34,7 @@ const Home = () => {
           sense of style.
         </p>
         <button className="shop-now-btn">Shop Now</button>
+
         <div className="statics">
           <div>
             <h1>200+</h1>

@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import "../Categories/Categories.scss";
 
 const Categories = () => {
@@ -8,9 +9,11 @@ const Categories = () => {
       </div>
       <div className="images">
         <div className="casual-formal">
-          <div className="casual">
-            <p>Casual</p>
-          </div>
+          <Link to="/categories">
+            <div className="casual">
+              <p>Casual</p>
+            </div>
+          </Link>
           <div className="formal">
             <p>Formal</p>
           </div>
