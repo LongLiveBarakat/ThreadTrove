@@ -65,7 +65,6 @@ const StarRating = ({ rating }) => {
   const full = Math.floor(rating);
   const half = rating % 1 !== 0;
   const empty = 5 - full - (half ? 1 : 0);
-
   return (
     <div className="review-stars">
       {Array.from({ length: full }, (_, i) => (
@@ -104,6 +103,94 @@ const ReviewCard = ({ review }) => (
   </div>
 );
 
+// ── You Might Also Like ──
+const ProductStars = ({ rating }) => {
+  const full = Math.floor(rating);
+  const half = rating % 1 !== 0;
+  const empty = 5 - full - (half ? 1 : 0);
+  return (
+    <div className="also-like__stars">
+      {Array.from({ length: full }, (_, i) => (
+        <span key={`f-${i}`} className="also-like__star also-like__star--full">
+          ★
+        </span>
+      ))}
+      {half && <span className="also-like__star also-like__star--half">★</span>}
+      {Array.from({ length: empty }, (_, i) => (
+        <span key={`e-${i}`} className="also-like__star also-like__star--empty">
+          ★
+        </span>
+      ))}
+    </div>
+  );
+};
+
+const YouMightAlsoLike = ({ currentId }) => {
+  const [related, setRelated] = useState([]);
+
+  useEffect(() => {
+    fetch("https://fakestoreapi.com/products?limit=8")
+      .then((res) => res.json())
+      .then((data) => {
+        const filtered = data
+          .filter((p) => p.id !== Number(currentId))
+          .slice(0, 4);
+        setRelated(filtered);
+      });
+  }, [currentId]);
+
+  if (!related.length) return null;
+
+  // Fake sale data for visual variety
+  const saleData = [
+    { oldPrice: null, discount: null },
+    { oldPrice: null, discount: null },
+    { oldPrice: null, discount: null },
+    { oldPrice: null, discount: null },
+  ];
+
+  return (
+    <div className="also-like">
+      <h2 className="also-like__title">YOU MIGHT ALSO LIKE</h2>
+      <div className="also-like__grid">
+        {related.map((product, i) => (
+          <div key={product.id} className="also-like__card">
+            <div className="also-like__img-wrap">
+              <img
+                src={product.image}
+                alt={product.title}
+                className="also-like__img"
+              />
+            </div>
+            <div className="also-like__info">
+              <p className="also-like__name">{product.title}</p>
+              <div className="also-like__rating-row">
+                <ProductStars rating={product.rating.rate} />
+                <span className="also-like__rating-num">
+                  {product.rating.rate}/5
+                </span>
+              </div>
+              <div className="also-like__price-row">
+                <span className="also-like__price">${product.price}</span>
+                {saleData[i].oldPrice && (
+                  <>
+                    <span className="also-like__old-price">
+                      ${saleData[i].oldPrice}
+                    </span>
+                    <span className="also-like__discount">
+                      {saleData[i].discount}
+                    </span>
+                  </>
+                )}
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
+
 const ProductSpecs = () => {
   const { id } = useParams();
   const [product, setProduct] = useState(null);
@@ -126,7 +213,6 @@ const ProductSpecs = () => {
       .then((data) => setProduct(data));
   }, [id]);
 
-  // Close modal on Escape key
   useEffect(() => {
     const handleKey = (e) => {
       if (e.key === "Escape") closeModal();
@@ -143,7 +229,6 @@ const ProductSpecs = () => {
     setFormError("");
     setModalOpen(true);
   };
-
   const closeModal = () => setModalOpen(false);
 
   const handleAddReview = () => {
@@ -159,14 +244,12 @@ const ProductSpecs = () => {
       setFormError("Please write your review.");
       return;
     }
-
     const today = new Date();
     const dateStr = today.toLocaleDateString("en-US", {
       year: "numeric",
       month: "long",
       day: "numeric",
     });
-
     const newReview = {
       id: Date.now(),
       name: formName.trim(),
@@ -175,15 +258,12 @@ const ProductSpecs = () => {
       text: formText.trim(),
       date: dateStr,
     };
-
     setReviews((prev) => [newReview, ...prev]);
     setVisibleCount((prev) => prev + 1);
     closeModal();
   };
 
-  if (!product) {
-    return <p>Loading...</p>;
-  }
+  if (!product) return <p>Loading...</p>;
 
   const fullStars = (rating) => Math.floor(rating);
   const hasHalfStar = (rating) => rating % 1 !== 0;
@@ -270,7 +350,6 @@ const ProductSpecs = () => {
 
       {/* ── Rating & Reviews Section ── */}
       <div className="reviews-section">
-        {/* Tab Bar */}
         <div className="reviews-tabs">
           <button className="reviews-tab">Product Details</button>
           <button className="reviews-tab reviews-tab--active">
@@ -279,7 +358,6 @@ const ProductSpecs = () => {
           <button className="reviews-tab">FAQs</button>
         </div>
 
-        {/* Controls Row */}
         <div className="reviews-controls">
           <h2 className="reviews-heading">
             All Reviews{" "}
@@ -321,14 +399,12 @@ const ProductSpecs = () => {
           </div>
         </div>
 
-        {/* Grid */}
         <div className="reviews-grid">
           {visibleReviews.map((review) => (
             <ReviewCard key={review.id} review={review} />
           ))}
         </div>
 
-        {/* Load More */}
         {hasMore && (
           <div className="reviews-load-more">
             <button
@@ -340,6 +416,9 @@ const ProductSpecs = () => {
           </div>
         )}
       </div>
+
+      {/* ── You Might Also Like ── */}
+      <YouMightAlsoLike currentId={id} />
 
       {/* ── Write a Review Modal ── */}
       {modalOpen && (
@@ -355,7 +434,6 @@ const ProductSpecs = () => {
                 ✕
               </button>
             </div>
-
             <div className="review-modal__field">
               <label className="review-modal__label">Your Name</label>
               <input
@@ -366,7 +444,6 @@ const ProductSpecs = () => {
                 onChange={(e) => setFormName(e.target.value)}
               />
             </div>
-
             <div className="review-modal__field">
               <label className="review-modal__label">Rating</label>
               <div className="review-modal__stars">
@@ -387,7 +464,6 @@ const ProductSpecs = () => {
                 ))}
               </div>
             </div>
-
             <div className="review-modal__field">
               <label className="review-modal__label">Your Review</label>
               <textarea
@@ -398,9 +474,7 @@ const ProductSpecs = () => {
                 rows={5}
               />
             </div>
-
             {formError && <p className="review-modal__error">{formError}</p>}
-
             <button className="review-modal__submit" onClick={handleAddReview}>
               Add Review
             </button>

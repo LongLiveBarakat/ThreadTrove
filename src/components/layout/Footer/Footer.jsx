@@ -1,5 +1,6 @@
 import "../Footer/Footer.scss";
 import { Link } from "react-router-dom";
+import { useState } from "react";
 import twitterIcon from "../../../assets/images/socialLinks/1.svg";
 import facebookIcon from "../../../assets/images/socialLinks/2.svg";
 import instagramIcon from "../../../assets/images/socialLinks/3.svg";
@@ -11,13 +12,58 @@ import badge4 from "../../../assets/images/visaImages/Badge-3.svg";
 import badge5 from "../../../assets/images/visaImages/Badge-4.svg";
 
 const Footer = () => {
+  const [email, setEmail] = useState("");
+  const [subscribed, setSubscribed] = useState(false);
+
+  const handleSubscribe = () => {
+    if (email.trim()) {
+      setSubscribed(true);
+      setEmail("");
+      setTimeout(() => setSubscribed(false), 3000);
+    }
+  };
+
   return (
     <div className="footer">
+      {/* Newsletter Banner */}
+      <div className="newsletter-banner">
+        <h2 className="newsletter-banner__title">
+          STAY UPTO DATE ABOUT <br /> OUR LATEST OFFERS
+        </h2>
+        <div className="newsletter-banner__form">
+          <div className="newsletter-banner__input-wrap">
+            <svg
+              className="newsletter-banner__icon"
+              width="18"
+              height="18"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.8"
+            >
+              <rect x="2" y="4" width="20" height="16" rx="2" />
+              <polyline points="2,4 12,13 22,4" />
+            </svg>
+            <input
+              type="email"
+              className="newsletter-banner__input"
+              placeholder="Enter your email address"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              onKeyDown={(e) => e.key === "Enter" && handleSubscribe()}
+            />
+          </div>
+          <button className="newsletter-banner__btn" onClick={handleSubscribe}>
+            {subscribed ? "✓ Subscribed!" : "Subscribe to Newsletter"}
+          </button>
+        </div>
+      </div>
+
       <div className="upper-part">
         <div className="shop-co">
           <p className="shop-co-title">SHOP-CO</p>
           <p className="shop-co-paragraph">
-            We have clothes that suit your style and <br /> which you’re proud
+            We have clothes that suit your style and <br /> which you're proud
             to wear. From <br /> women to men.
           </p>
           <div className="social-links">
